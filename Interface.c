@@ -9,27 +9,6 @@
 #include "Interface.h"
 #include "screen.h"
 
-struct interface_{
-    // settings
-    unsigned int8_t brightness;
-    /* ? */ volume; 
-    int8_t mute;
-    int8_t invert;
-    unsigned int8_t state;
-    
-    // track preferences
-    char track[MAX_STRING + 1];
-    unsigned int8_t cursor_pos;
-
-    // interface
-    int8_t event;
-    int8_t active_block;
-    int8_t block_item;
-
-    // errors
-    int8_t error;
-};
-
 void init_interface(Interface *const interface)
 {
     interface->brightness = 125; // Look forward eeprom
@@ -67,7 +46,7 @@ void step_brightness(Interface *const interface, const int8_t type)
 
 void toggle_invert(Interface *const interface)
 {
-    interface->invert = !(interface-invert);
+    interface->invert = !(interface->invert);
 }
 
 void step_volume(Interface *const interface, const int8_t type)
@@ -103,6 +82,6 @@ int8_t get_state(const Interface *const interface)
 
 /* ? */ get_volume(const Interface *const interface)
 {
-    return include->volume;
+    return interface->volume;
 }
 

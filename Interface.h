@@ -5,7 +5,11 @@
  * Group: IU7-23B
  */
 
-#include <stdlib.h>
+#ifndef INTERFACE_H
+#define INTERFACE_H
+
+#include <stdint.h>
+#include <avr/pgmspace.h>
 
 // Interface elements
 // BLOCKS
@@ -26,7 +30,7 @@ const PROGMEM int8_t LEVEL_BRIGHTNESS = 2;
 const PROGMEM int8_t ERROR_OK = 1;
 
 // Values
-const PROGMEM unsigned int8_t MAX_STRING = 255;
+#define MAX_STRING 255
 const PROGMEM int8_t MAX_LEVEL_VOLUME = //?;
 const PROGMEM int8_t MAX_LEVEL_BRIGHTNESS = 255;
 const PROGMEM int8_t BRIGHTNESS_STEP = 51;
@@ -54,7 +58,27 @@ const PROGMEM int8_t BLOCK_CHANGED = 10;
 const PROGMEM int8_t ITEM_CHANGED = 11;
 
 // Main interface item 
-typedef struct interface_ Interface;
+typedef struct 
+{
+    // settings
+    uint8_t brightness;
+    /* ? */ volume; 
+    int8_t mute;
+    int8_t invert;
+    uint8_t state;
+    
+    // track preferences
+    char track[MAX_STRING + 1];
+    uint8_t cursor_pos;
+
+    // interface
+    int8_t event;
+    int8_t active_block;
+    int8_t block_item;
+
+    // errors
+    int8_t error;
+} Interface;
 
 void init_interface(Interface *const interface);
 
@@ -76,3 +100,4 @@ int8_t get_state(const Interface *const interface);
 
 /* ? */ get_volume(const Interface *const interface);
 
+#endif 
