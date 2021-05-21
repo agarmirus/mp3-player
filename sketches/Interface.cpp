@@ -6,15 +6,16 @@
  */
 
 #include <string.h>
+#include <EEPROM.h>
 #include "Interface.h"
 #include "screen.h"
 
 void init_interface(Interface *const interface)
 {
-    interface->brightness = 125; // Look forward eeprom
-    interface->volume = //?;     // same
-    interface->mute = 1;         // same
-    interface->invert = 1;       // same
+    interface->brightness = EEPROM.read(BRIGHTNESS_BYTE);
+    interface->volume = EEPROM.read(VOLUME_BYTE);
+    interface->mute = EEPROM.read(MUTE_BYTE);
+    interface->invert = EEPROM.read(INVERT_BYTE);
     interface->state = PAUSE;
 
     strcpy(interface->track, TRACK_PLACEHOLDER);
@@ -80,7 +81,7 @@ int8_t get_state(const Interface *const interface)
     return interface->state;
 }
 
-/* ? */ get_volume(const Interface *const interface)
+uint8_t get_volume(const Interface *const interface)
 {
     return interface->volume;
 }

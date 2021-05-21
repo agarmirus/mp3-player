@@ -31,14 +31,25 @@ const PROGMEM int8_t ERROR_OK = 1;
 
 // Values
 #define MAX_STRING 255
-const PROGMEM int8_t MAX_LEVEL_VOLUME = //?;
+const PROGMEM int8_t MAX_LEVEL_VOLUME = 31;
 const PROGMEM int8_t MAX_LEVEL_BRIGHTNESS = 255;
 const PROGMEM int8_t BRIGHTNESS_STEP = 51;
-const PROGMEM int8_t VOLUME_STEP = //?;
+const PROGMEM int8_t VOLUME_STEP = 3;
 const PROGMEM int8_t INCREASE = 1;
 const PROGMEM int8_t DECREASE = 2;
 
 const PROGMEM char TRACK_PLACEHOLDER[] = "Ничего не воспроизводится";
+
+// EEPROM
+const PROGMEM uint8_t VOLUME_BYTE = 100;
+const PROGMEM uint8_t BRIGHTNESS_BYTE = 101;
+const PROGMEM uint8_t MUTE_BYTE = 102;
+const PROGMEM uint8_t INVERT_BYTE = 103;
+
+const PROGMEM uint8_t DEF_VOLUME = 15;
+const PROGMEM uint8_t DEF_BRIGHTNESS = 102;
+const PROGMEM uint8_t DEF_MUTE = 0;
+const PROGMEM uint8_t DEF_INVERT = 0;
 
 // States
 const PROGMEM int8_t PLAY = 1;
@@ -62,7 +73,7 @@ typedef struct
 {
     // settings
     uint8_t brightness;
-    /* ? */ volume; 
+    uint8_t volume; 
     int8_t mute;
     int8_t invert;
     uint8_t state;
@@ -92,12 +103,12 @@ void toggle_mute(Interface *const interface);
 
 void set_track(Interface *const interface, const char *const track);
 
-void set_error(Interface *const interface, const /* ? */ error);
+void set_error(Interface *const interface, const int8_t  error);
 
-int8_t get_event(Interface *const interface, const /* ? */ action);
+int8_t get_event(Interface *const interface, /* ? */ action);
 
 int8_t get_state(const Interface *const interface);
 
-/* ? */ get_volume(const Interface *const interface);
+uint8_t get_volume(const Interface *const interface);
 
 #endif 

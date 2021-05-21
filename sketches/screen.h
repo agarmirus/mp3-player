@@ -13,11 +13,8 @@
 #include "Interface.h"
 
 // Pins
-const PROGMEM int8_t SCREEN_CS = 10; // Chip select pin
-const PROGMEM int8_t SCREEN_DS = 9; // Data/command pin
-const PROGMEM int8_t SCREEN_RES = 8; // Reset pin
-const PROGMEM int8_t SCREEN_CLK = 13; // CLK Clock pin
-const PROGMEM int8_t SCREEN_MOSI = 11; // MOSI pin
+const PROGMEM int8_t SCREEN_SCL = 5; 
+const PROGMEM int8_t SCREEN_SDA = 4; 
 
 // Sizes
 const PROGMEM uint8_t SCREEN_WIDTH = 128;
@@ -28,6 +25,8 @@ const PROGMEM uint8_t OK_SCREEN = 0;
 const PROGMEM uint8_t ERROR_SCREEN_INIT = 1;
 
 uint8_t init_screen(Interface *const interface);
+
+void screen_shutdown(Interface *const interface);
 
 void draw_screen_frame(Interface *const interface);
 
