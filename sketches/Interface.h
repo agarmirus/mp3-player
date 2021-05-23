@@ -19,7 +19,7 @@
 
 #define START_INDEX        0
 #define PLAIN_BLOCK_AMOUNT 2
-const PROGMEM int8_t MAX_BLOCK_ELEMENTS = {3, 3};
+const PROGMEM int8_t MAX_BLOCK_ELEMENTS[] = {3, 3};
 
 // BUTTON ITEMS
 #define BUTTON_PREVIOUS 0

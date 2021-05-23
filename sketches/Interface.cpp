@@ -26,7 +26,7 @@ void init_interface(Interface *const interface)
     interface->invert = EEPROM.read(INVERT_BYTE);
     interface->state = PAUSE;
     interface->fade = UNFADED;
-    interface->last_call = mills();
+    interface->last_call = millis();
 
     strcpy(interface->track, (char *) pgm_read_word(&TRACK_PLACEHOLDER));
     interface->cursor_pos = 0;
@@ -43,10 +43,10 @@ void init_interface(Interface *const interface)
 
 void check_timer(Interface *const interface)
 {
-    unsigned long c_time = mills();
+    unsigned long c_time = millis();
     unsigned long diff = c_time - interface->last_call;
     
-    // Fix mills ulong limit
+    // Fix millis ulong limit
     if (diff < 0)
         if (c_time <= SLEEP_TIME)
             diff = ULONG_MAX - interface->last_call + c_time;
@@ -119,47 +119,53 @@ void set_track(Interface *const interface, const char *const track)
 
 int8_t on_select(Interface *const interface)
 {
-    switch (interface->block_item)
-    {
-        case (BUTTON_PLAY):
-            if (PLAY == interface->state)
-                interface->state = PAUSE;
-            else
-                interface->state = PLAY;
-            
-            return PLAY_BUTTON_PRESSED;
-        case (BUTTON_PREVIOUS):
-            return PREVIOUS_BUTTON_PRESSED;
-        case (BUTTON_FORWARD):
-            return FORWARD_BUTTON_PRESSED;
-        case (LEVEL_DECREASE):
-            return on_select_level(interface, DECREASE);
-        case (LEVEL_INCREASE):
-            return on_select_level(interface, INCREASE);
-        case (LEVEL_BUTTON):
-            if (LEVEL_SELECT == interface->level_mode) 
-            {
-                interface->level_mode = LEVEL_ADJUST;
+    if (BLOCK_BUTTON == interface->active_block)
+        switch (interface->block_item)
+        {
+            case (BUTTON_PLAY):
+                if (PLAY == interface->state)
+                    interface->state = PAUSE;
+                else
+                    interface->state = PLAY;
+                
+                return PLAY_BUTTON_PRESSED;
+            case (BUTTON_PREVIOUS):
+                return PREVIOUS_BUTTON_PRESSED;
+            case (BUTTON_FORWARD):
+                return FORWARD_BUTTON_PRESSED;
+        }
 
-                return LEVEL_MODE_CHANGED;
-            }
-
-            if (LEVEL_VOLUME == interface->level_type)
-            {
-                toggle_mute(interface);
-
-                return MUTE_TOGGLED;
-            }
-
-            if (LEVEL_BRIGHTNESS == interface->type)
-            {
-                toggle_invert(interface);
-
-                return INVERT_TOGGLED;
-            }
-
-            break;
-    }
+    if (BLOCK_LEVEL == interface->active_block)
+        switch (interface->block_item)
+        {
+            case (LEVEL_DECREASE):
+                return on_select_level(interface, DECREASE);
+            case (LEVEL_INCREASE):
+                return on_select_level(interface, INCREASE);
+            case (LEVEL_BUTTON):
+                if (LEVEL_SELECT == interface->level_mode) 
+                {
+                    interface->level_mode = LEVEL_ADJUST;
+    
+                    return LEVEL_MODE_CHANGED;
+                }
+    
+                if (LEVEL_VOLUME == interface->level_type)
+                {
+                    toggle_mute(interface);
+    
+                    return MUTE_TOGGLED;
+                }
+    
+                if (LEVEL_BRIGHTNESS == interface->level_type)
+                {
+                    toggle_invert(interface);
+    
+                    return INVERT_TOGGLED;
+                }
+    
+                break;
+        }
 
     return NULL;
 }
@@ -230,21 +236,15 @@ int8_t get_event(Interface *const interface, const int *const buttons)
 {
     int8_t rc = NULL;
 
-    switch (BUTTON_PRESSED)
-    {
-        case (button[INDEX_BUTTON_SELECT]):
-            rc = on_select(interface);
-            break;
-        case (button[INDEX_BUTTON_LEFT]):
-            rc = on_navigate(interface, INDEX_BUTTON_LEFT);
-            break;
-        case (button[INDEX_BUTTON_RIGHT]):
-            rc = on_navigate(interface, INDEX_BUTTON_RIGHT);
-            break;
-    }
+    if (BUTTON_PRESSED == buttons[INDEX_BUTTON_SELECT])
+        rc = on_select(interface);
+    else if (BUTTON_PRESSED == buttons[INDEX_BUTTON_LEFT])
+        rc = on_navigate(interface, INDEX_BUTTON_LEFT);
+    else if (BUTTON_PRESSED == buttons[INDEX_BUTTON_RIGHT])
+        rc = on_navigate(interface, INDEX_BUTTON_RIGHT);
 
     interface->event = rc;
-    interface->last_call = mills();
+    interface->last_call = millis();
     check_timer(interface);
 
     return rc;
