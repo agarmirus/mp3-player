@@ -2,7 +2,7 @@
  * Module, which handles button clicks
  *
  * Call example:
- * int button[4];
+ * int button[3];
  * button_processing(button);
  *
  * Author: Sapozhkov Andrey
@@ -17,10 +17,9 @@
 #define BUTTON_PRESSED 1
 #define BUTTON_NOT_PRESSED 0
 
-const int BUTTON_0 = 5;
-const int BUTTON_1 = 7;
-const int BUTTON_2 = 8;
-const int BUTTON_3 = 11;
+const PROGMEM int BUTTON_LEFT = 5;
+const PROGMEM int BUTTON_SELECT = 7;
+const PROGMEM int BUTTON_RIGHT = 8;
 
 void button_processsing(int *const button);
 
