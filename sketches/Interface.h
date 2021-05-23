@@ -13,60 +13,80 @@
 
 // Interface elements
 // BLOCKS
-const PROGMEM int8_t BLOCK_BUTTON = 1;
-const PROGMEM int8_t BLOCK_LEVEL = 2;
-const PROGMEM int8_t BLOCK_ERROR = 3;
+#define BLOCK_LEVEL  0
+#define BLOCK_BUTTON 1
+#define BLOCK_ERROR  2
+
+#define START_INDEX        0
+#define PLAIN_BLOCK_AMOUNT 2
+const PROGMEM int8_t MAX_BLOCK_ELEMENTS = {3, 3};
 
 // BUTTON ITEMS
-const PROGMEM int8_t BUTTON_PLAY = 1;
-const PROGMEM int8_t BUTTON_PREVIOUS = 2;
-const PROGMEM int8_t BUTTON_FORWARD = 3;
+#define BUTTON_PREVIOUS 0
+#define BUTTON_PLAY     1
+#define BUTTON_FORWARD  2
+
+// LEVEL TYPES
+#define LEVEL_AMOUNT     2
+#define LEVEL_VOLUME     0
+#define LEVEL_BRIGHTNESS 1
+
+// LEVEL MODES
+#define LEVEL_SELECT 0
+#define LEVEL_ADJUST 1
 
 // LEVEL ITEMS
-const PROGMEM int8_t LEVEL_VOLUME = 1;
-const PROGMEM int8_t LEVEL_BRIGHTNESS = 2;
+#define LEVEL_DECREASE 0
+#define LEVEL_BUTTON   1
+#define LEVEL_INCREASE 2
 
 // ERROR ITEMS
-const PROGMEM int8_t ERROR_OK = 1;
+#define ERROR_OK 1
 
 // Values
-#define MAX_STRING 255
-const PROGMEM int8_t MAX_LEVEL_VOLUME = 31;
-const PROGMEM int8_t MAX_LEVEL_BRIGHTNESS = 255;
-const PROGMEM int8_t BRIGHTNESS_STEP = 51;
-const PROGMEM int8_t VOLUME_STEP = 3;
-const PROGMEM int8_t INCREASE = 1;
-const PROGMEM int8_t DECREASE = 2;
+#define MAX_STRING             255
+#define MAX_LEVEL_VOLUME        30
+#define MAX_LEVEL_BRIGHTNESS   255
+#define BRIGHTNESS_STEP         51
+#define VOLUME_STEP              3
+#define INCREASE                 1
+#define DECREASE                 2
+#define FADED_BRIGHTNESS_SCALE   4 // To be tested
+#define FADED                    1
+#define UNFADED                  0
+#define ADJUST_TIME           4000 // To be tested
+#define SLEEP_TIME           10000 // To be tested
 
 const PROGMEM char TRACK_PLACEHOLDER[] = "Ничего не воспроизводится";
 
 // EEPROM
-const PROGMEM uint8_t VOLUME_BYTE = 100;
-const PROGMEM uint8_t BRIGHTNESS_BYTE = 101;
-const PROGMEM uint8_t MUTE_BYTE = 102;
-const PROGMEM uint8_t INVERT_BYTE = 103;
+#define VOLUME_BYTE     100
+#define BRIGHTNESS_BYTE 101
+#define MUTE_BYTE       102
+#define INVERT_BYTE     103
 
-const PROGMEM uint8_t DEF_VOLUME = 15;
-const PROGMEM uint8_t DEF_BRIGHTNESS = 102;
-const PROGMEM uint8_t DEF_MUTE = 0;
-const PROGMEM uint8_t DEF_INVERT = 0;
+#define DEF_VOLUME      15
+#define DEF_BRIGHTNESS 102
+#define DEF_MUTE         0
+#define DEF_INVERT       0
 
 // States
-const PROGMEM int8_t PLAY = 1;
-const PROGMEM int8_t PAUSE = 2;
+#define PLAY  1
+#define PAUSE 2
 
 // Events
-const PROGMEM int8_t PLAY_BUTTON_PRESSED = 1;
-const PROGMEM int8_t FORWARD_BUTTON_PRESSED = 2;
-const PROGMEM int8_t BACKWARD_BUTTON_PRESSED = 3;
-const PROGMEM int8_t VOLUME_INCREASED = 4;
-const PROGMEM int8_t VOLUME_DECREASED = 5;
-const PROGMEM int8_t MUTE_TOGGLED = 6;
-const PROGMEM int8_t BRIGHTNESS_INCREASED = 7;
-const PROGMEM int8_t BRIGHTNESS_DECREASED = 8;
-const PROGMEM int8_t INVERT_TOGGLED = 9;
-const PROGMEM int8_t BLOCK_CHANGED = 10;
-const PROGMEM int8_t ITEM_CHANGED = 11;
+#define PLAY_BUTTON_PRESSED      1
+#define FORWARD_BUTTON_PRESSED   2
+#define PREVIOUS_BUTTON_PRESSED  3
+#define VOLUME_CHANGED           4
+#define MUTE_TOGGLED             5
+#define BRIGHTNESS_CHANGED       6
+#define INVERT_TOGGLED           7
+#define BLOCK_CHANGED            8
+#define ITEM_CHANGED             9
+#define LEVEL_CHANGED           10
+#define LEVEL_MODE_CHANGED      11
+#define OK_BUTTON_ERROR_PRESSED 12
 
 // Main interface item 
 typedef struct 
@@ -77,6 +97,8 @@ typedef struct
     int8_t mute;
     int8_t invert;
     uint8_t state;
+    uint8_t fade;
+    unsigned long last_call; 
     
     // track preferences
     char track[MAX_STRING + 1];
@@ -87,11 +109,16 @@ typedef struct
     int8_t active_block;
     int8_t block_item;
 
+    int8_t level_type;
+    int8_t level_mode;
+
     // errors
     int8_t error;
 } Interface;
 
 void init_interface(Interface *const interface);
+
+void check_timer(Interface *const interface); // TODO
 
 void step_brightness(Interface *const interface, const int8_t type);
 
@@ -105,7 +132,7 @@ void set_track(Interface *const interface, const char *const track);
 
 void set_error(Interface *const interface, const int8_t  error);
 
-int8_t get_event(Interface *const interface, /* ? */ action);
+int8_t get_event(Interface *const interface, const int *const buttons);
 
 int8_t get_state(const Interface *const interface);
 

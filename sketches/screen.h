@@ -13,24 +13,28 @@
 #include "Interface.h"
 
 // Pins
-const PROGMEM int8_t SCREEN_SCL = 5; 
-const PROGMEM int8_t SCREEN_SDA = 4; 
+#define SCREEN_SCL 5 
+#define SCREEN_SDA 4 
 
 // Sizes
-const PROGMEM uint8_t SCREEN_WIDTH = 128;
-const PROGMEM uint8_t SCREEN_HEIGHT = 64; 
+#define SCREEN_WIDTH 128
+#define SCREEN_HEIGHT 64 
 
 // Return codes
-const PROGMEM uint8_t OK_SCREEN = 0;
-const PROGMEM uint8_t ERROR_SCREEN_INIT = 1;
+#define OK_SCREEN         0
+#define ERROR_SCREEN_INIT 1
 
 uint8_t init_screen(Interface *const interface);
 
-void screen_shutdown(Interface *const interface);
+void screen_shutdown(const Interface *const interface);
 
-void draw_screen_frame(Interface *const interface);
+void draw_screen_frame(const Interface *const interface); // TODO
+
+void check_for_timeout(); // TODO
 
 void set_screen_brightness(const uint8_t brightness);
+
+void set_screen_invert(const uint8_t type);
 
 #endif 
 
