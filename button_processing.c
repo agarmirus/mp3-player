@@ -13,7 +13,7 @@
 
 void button_processsing(int *const button)
 {
-    button[0] = digitalRead(pgm_read_int(&BUTTON_LEFT)) == LOW ? BUTTON_PRESSED : BUTTON_NOT_PRESSED;
-    button[1] = digitalRead(pgm_read_int(&BUTTON_SELECT)) == LOW ? BUTTON_PRESSED : BUTTON_NOT_PRESSED;
-    button[2] = digitalRead(pgm_read_int(&BUTTON_RIGHT)) == LOW ? BUTTON_PRESSED : BUTTON_NOT_PRESSED;
+    button[INDEX_BUTTON_LEFT] = digitalRead(pgm_read_word(&BUTTON_LEFT)) == LOW ? BUTTON_PRESSED : BUTTON_NOT_PRESSED;
+    button[INDEX_BUTTON_SELECT] = digitalRead(pgm_read_word(&BUTTON_SELECT)) == LOW ? BUTTON_PRESSED : BUTTON_NOT_PRESSED;
+    button[INDEX_BUTTON_RIGHT] = digitalRead(pgm_read_word(&BUTTON_RIGHT)) == LOW ? BUTTON_PRESSED : BUTTON_NOT_PRESSED;
 }
