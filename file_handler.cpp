@@ -1,5 +1,11 @@
 #include "DFMiniMp3.h"
-#include <stdint.h>
+#include <SoftwareSerial.h>
+
+class Mp3Notify; 
+
+SoftwareSerial secondarySerial(10, 11); // RX, TX
+typedef DFMiniMp3<SoftwareSerial, Mp3Notify> DfMp3;
+DfMp3 dfmp3(secondarySerial);
 
 void setup()
 {
