@@ -1,14 +1,17 @@
 #include "button_processing.h"
-#include "screen.h"
 #include "file_handler.h"
-#include "button_processing.h"
 #include "Interface.h"
+#include "screen.h"
+
 
 #define BUTTONS_COUNT 3
 
 #define INDEX_BUTTON_LEFT 0
 #define INDEX_BUTTON_SELECT 1
 #define INDEX_BUTTON_RIGHT 2
+
+
+int buttons_flags[BUTTONS_COUNT] = {0};
 
 
 void setup()
@@ -26,8 +29,6 @@ void setup()
 
 void loop()
 {
-    int buttons_flags[BUTTONS_COUNT] = {0};
-
     button_processing(buttons_flags);
 
     get_event(Interface, buttons_flags);
