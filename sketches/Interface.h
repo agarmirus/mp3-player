@@ -5,8 +5,8 @@
  * Group: IU7-23B
  */
 
-#ifndef INTERFACE_H
-#define INTERFACE_H
+#ifndef _INTERFACE_H_
+#define _INTERFACE_H_
 
 #include <stdint.h>
 #include <avr/pgmspace.h>
@@ -75,6 +75,7 @@ const PROGMEM char TRACK_PLACEHOLDER[] = "Ничего не воспроизво
 #define PAUSE 2
 
 // Events
+#define NULL_EVENT               0
 #define PLAY_BUTTON_PRESSED      1
 #define FORWARD_BUTTON_PRESSED   2
 #define PREVIOUS_BUTTON_PRESSED  3
@@ -102,7 +103,8 @@ typedef struct
     
     // track preferences
     char track[MAX_STRING + 1];
-    uint8_t cursor_pos;
+    uint8_t track_size;
+    int16_t cursor_pos;
 
     // interface
     int8_t event;
@@ -118,7 +120,9 @@ typedef struct
 
 void init_interface(Interface *const interface);
 
-void check_timer(Interface *const interface); // TODO
+void check_timer(Interface *const interface);
+
+void shudown_interface(const Interface *const interface);
 
 void step_brightness(Interface *const interface, const int8_t type);
 
@@ -131,6 +135,8 @@ void toggle_mute(Interface *const interface);
 void set_track(Interface *const interface, const char *const track);
 
 void set_error(Interface *const interface, const int8_t  error);
+
+void set_cursor(Interface *const interface, const int16_t pos);
 
 int8_t get_event(Interface *const interface, const int *const buttons);
 
