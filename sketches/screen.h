@@ -76,7 +76,7 @@ uint8_t init_screen(Interface *const interface);
 
 void screen_shutdown(const Interface *const interface); // TODO
 
-void draw_screen_frame(Interface *const interface); // TODO
+void draw_screen_frame(Interface *const interface);
 
 void set_screen_brightness(const uint8_t brightness);
 

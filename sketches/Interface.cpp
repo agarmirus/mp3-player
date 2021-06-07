@@ -44,6 +44,14 @@ void init_interface(Interface *const interface)
     interface->error = NULL;
 }
 
+void init_screen_eeprom(void)
+{
+    EEPROM.write(BRIGHTNESS_BYTE, DEF_BRIGHTNESS);
+    EEPROM.write(VOLUME_BYTE, DEF_VOLUME);
+    EEPROM.write(INVERT_BYTE, DEF_INVERT);
+    EEPROM.write(MUTE_BYTE, DEF_MUTE);
+}
+
 void check_timer(Interface *const interface)
 {
     unsigned long c_time = millis();

@@ -122,6 +122,8 @@ typedef struct
 
 void init_interface(Interface *const interface);
 
+void init_screen_eeprom(void);
+
 void check_timer(Interface *const interface);
 
 void shudown_interface(const Interface *const interface);

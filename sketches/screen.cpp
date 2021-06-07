@@ -28,7 +28,7 @@ void draw_button(const uint8_t *const pos, const uint8_t radius,
 
 void draw_buttons(const Interface *const interface);
 
-void draw_levels(const Interface *const interface); // todo
+void draw_levels(const Interface *const interface); 
 
 // Init screen class
 Adafruit_SSD1306 screen(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire);
