@@ -129,7 +129,7 @@ void set_track(Interface *const interface, const char *const track)
     strncpy(interface->track, track, MAX_STRING);
     interface->track_size = strlen(interface->track);
 
-    if (TEXT_LIM <= interface->track_size);
+    if (TEXT_LIM <= interface->track_size)
     {
         interface->cursor_pos = DEFAULE_TEXT_OFFSET;
         return;
@@ -197,7 +197,7 @@ int8_t on_navigate(Interface *const interface, const int button)
     if (BLOCK_ERROR == interface->active_block)
         return NULL_EVENT;
 
-    uint8_t step = (INDEX_BUTTON_LEFT == button) ? 1 : -1;
+    int8_t step = (INDEX_BUTTON_LEFT == button) ? 1 : -1;
 
     if (-1 == step && START_INDEX == interface->block_item || 1 == step 
         && (pgm_read_byte(&MAX_BLOCK_ELEMENTS[interface->active_block])
@@ -206,16 +206,16 @@ int8_t on_navigate(Interface *const interface, const int button)
         if (BLOCK_LEVEL == interface->active_block 
             && LEVEL_ADJUST == interface->level_mode || -1 == step 
             && START_INDEX == interface->active_block || 1 == step
-            && PLAIN_BLOCK_AMOUNT == interface->active_block - 1)
+            && PLAIN_BLOCK_AMOUNT == interface->active_block + 1)
             return NULL_EVENT;
         
         interface->active_block += step;
         
-        if (-1 == step)
+        if (1 == step)
             interface->block_item = START_INDEX;
         else
             (interface->block_item = 
-             pgm_read_byte(&MAX_BLOCK_ELEMENTS[interface->active_block]) - 1);
+             pgm_read_byte(&MAX_BLOCK_ELEMENTS[interface->active_block]));
 
         return BLOCK_CHANGED;
     }
