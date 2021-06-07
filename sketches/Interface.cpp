@@ -38,8 +38,8 @@ void init_interface(Interface *const interface)
     interface->active_block = BLOCK_BUTTON;
     interface->block_item = BUTTON_PLAY;
 
-    interface->level_type = NULL;
-    interface->level_mode = NULL;
+    interface->level_type = LEVEL_VOLUME;
+    interface->level_mode = LEVEL_SELECT;
 
     interface->error = NULL;
 }

@@ -17,12 +17,16 @@ void turn_on_animation(void);
 
 void shutdown_animation(void);
 
-void draw_track(const Interface *const interface);
+void draw_track(Interface *const interface);
+
+void draw_triangle(const uint8_t *const pos, const uint8_t radius, 
+                   const bool fill, const int8_t color, const float scale, 
+                   const int8_t side);
 
 void draw_button(const uint8_t *const pos, const uint8_t radius, 
                  const int8_t state, const int8_t type, const int8_t play);
 
-void draw_buttons(const Interface *const interface); // todo
+void draw_buttons(const Interface *const interface);
 
 void draw_levels(const Interface *const interface); // todo
 
@@ -40,7 +44,6 @@ uint8_t init_screen(Interface *const interface)
     set_screen_brightness(interface->brightness);
    
     screen.setTextColor(SSD1306_WHITE); 
-    screen.setTextSize(DEFAULT_TEXT_SCALE);
     screen.setTextWrap(false);
 
     turn_on_animation();
@@ -146,9 +149,9 @@ void draw_screen_frame(Interface *const interface)
 
     // Drawing lines
     screen.drawFastVLine(1, 1, SCREEN_HEIGHT - 2, SSD1306_WHITE);
-    screen.drawFastVLine(SCREEN_WIDTH - 1, 1, SCREEN_HEIGHT - 2, SSD1306_WHITE);
+    screen.drawFastVLine(SCREEN_WIDTH - 2, 1, SCREEN_HEIGHT - 2, SSD1306_WHITE);
     screen.drawFastHLine(1, 1, SCREEN_WIDTH - 2, SSD1306_WHITE);
-    screen.drawFastVLine(1, SCREEN_HEIGHT - 1, SCREEN_WIDTH - 2, 
+    screen.drawFastHLine(1, SCREEN_HEIGHT - 2, SCREEN_WIDTH - 2, 
                          SSD1306_WHITE);
 
     draw_buttons(interface);
@@ -159,6 +162,7 @@ void draw_screen_frame(Interface *const interface)
 
 void draw_track(Interface *const interface)
 {
+    screen.setTextSize(DEFAULT_TEXT_SCALE);
     screen.setCursor(interface->cursor_pos, TEXT_Y);
     screen.print(interface->track);
 
@@ -174,6 +178,30 @@ void draw_track(Interface *const interface)
     screen.fillRect(0, 0, DEFAULE_TEXT_OFFSET, SCREEN_HEIGHT, SSD1306_BLACK);
     screen.fillRect(SCREEN_WIDTH - DEFAULE_TEXT_OFFSET, 0, 
                     DEFAULE_TEXT_OFFSET, SCREEN_HEIGHT, SSD1306_BLACK);
+}
+
+void draw_triangle(const uint8_t *const pos, const uint8_t radius, 
+                   const bool fill, const int8_t color, const float scale,
+                   const int8_t side)
+{
+    uint8_t pos_modified[] = {pgm_read_byte(&pos[0]) + side * scale * radius,
+                              pgm_read_byte(&pos[1]),
+                              pgm_read_byte(&pos[0]) - side * scale * radius
+                              * COS60,
+                              pgm_read_byte(&pos[1]) + scale * radius * SIN60,
+                              pgm_read_byte(&pos[0]) - side * scale * radius  
+                              * COS60,
+                              pgm_read_byte(&pos[1]) - scale * radius * SIN60
+                              };
+
+    if (fill)
+        screen.fillTriangle(pos_modified[0], pos_modified[1], pos_modified[2], 
+                            pos_modified[3], pos_modified[4], pos_modified[5], 
+                            color);
+    else
+        screen.drawTriangle(pos_modified[0], pos_modified[1], pos_modified[2], 
+                            pos_modified[3], pos_modified[4], pos_modified[5], 
+                            color);
 }
 
 void draw_button(const uint8_t *const pos, const uint8_t radius, 
@@ -199,55 +227,26 @@ void draw_button(const uint8_t *const pos, const uint8_t radius,
         if (BUTTON_PLAY == type)
         {
             if (PAUSE == play)
-                screen.fillTriangle(pgm_read_byte(&pos[0]) + ICON_RATIO 
-                                    * radius,
-                                    pgm_read_byte(&pos[1]),
-                                    pgm_read_byte(&pos[0]) - ICON_RATIO * radius
-                                    * COS60,
-                                    pgm_read_byte(&pos[1]) + ICON_RATIO * radius
-                                    * SIN60,
-                                    pgm_read_byte(&pos[0]) - ICON_RATIO * radius
-                                    * COS60,
-                                    pgm_read_byte(&pos[1]) - ICON_RATIO * radius
-                                    * SIN60,
-                                    accent);
+                draw_triangle(pos, radius, true, accent, ICON_RATIO, TLEFT);
             else if (PLAY == play)
             {
-                screen.fillRect(pgm_read_byte(&pos[0]) - DIAG * radius,
-                                pgm_read_byte(&pos[1]) - DIAG * radius,
-                                PAUSE_BAR_RATIO * radius,
-                                2 * DIAG * radius, accent);
-                screen.fillRect(pgm_read_byte(&pos[0]) + DIAG * radius 
-                                - PAUSE_BAR_RATIO * radius,
-                                pgm_read_byte(&pos[1]) - DIAG * radius,
-                                PAUSE_BAR_RATIO * radius,
-                                2 * DIAG * radius, accent);
+                uint8_t width = PAUSE_BAR_RATIO * radius;
+                uint8_t height = 2 * radius * ICON_RATIO;
+
+                screen.fillRect(pgm_read_byte(&pos[0]) - ICON_RATIO * DIAG 
+                                * radius + width,
+                                pgm_read_byte(&pos[1]) - height / 2,
+                                width, height, accent);
+                screen.fillRect(pgm_read_byte(&pos[0]) + ICON_RATIO * DIAG 
+                                * radius - width,
+                                pgm_read_byte(&pos[1]) - height / 2,
+                                width, height, accent);
             }
         }
         else if (BUTTON_FORWARD == type)
-            screen.drawTriangle(pgm_read_byte(&pos[0]) + ICON_RATIO * radius,
-                                pgm_read_byte(&pos[1]),
-                                pgm_read_byte(&pos[0]) - ICON_RATIO * radius
-                                * COS60,
-                                pgm_read_byte(&pos[1]) + ICON_RATIO * radius
-                                * SIN60,
-                                pgm_read_byte(&pos[0]) - ICON_RATIO * radius
-                                * COS60,
-                                pgm_read_byte(&pos[1]) - ICON_RATIO * radius
-                                * SIN60,
-                                accent);
+            draw_triangle(pos, radius, false, accent, ICON_RATIO, TLEFT);
         else if (BUTTON_PREVIOUS == type)
-            screen.drawTriangle(pgm_read_byte(&pos[0]) - ICON_RATIO * radius,
-                                pgm_read_byte(&pos[1]),
-                                pgm_read_byte(&pos[0]) + ICON_RATIO * radius
-                                * COS60,
-                                pgm_read_byte(&pos[1]) + ICON_RATIO * radius
-                                * SIN60,
-                                pgm_read_byte(&pos[0]) + ICON_RATIO * radius
-                                * COS60,
-                                pgm_read_byte(&pos[1]) - ICON_RATIO * radius
-                                * SIN60,
-                                accent);
+            draw_triangle(pos, radius, false, accent, ICON_RATIO, TRIGHT);
     }
 }
 
@@ -257,7 +256,8 @@ void draw_buttons(const Interface *const interface)
 
     if (PLAY_BUTTON_PRESSED == interface->event)
         state = PRESSED;
-    else if (BUTTON_PLAY == interface->block_item)
+    else if (BLOCK_BUTTON == interface->active_block 
+             && BUTTON_PLAY == interface->block_item)
         state = ACTIVE;
     else
         state = INACTIVE;
@@ -267,7 +267,8 @@ void draw_buttons(const Interface *const interface)
 
     if (FORWARD_BUTTON_PRESSED == interface->event)
         state = PRESSED;
-    else if (BUTTON_FORWARD == interface->block_item)
+    else if (BLOCK_BUTTON == interface->active_block 
+             && BUTTON_FORWARD == interface->block_item)
         state = ACTIVE;
     else
         state = INACTIVE;
@@ -277,7 +278,8 @@ void draw_buttons(const Interface *const interface)
 
     if (PREVIOUS_BUTTON_PRESSED == interface->event)
         state = PRESSED;
-    else if (BUTTON_PREVIOUS == interface->block_item)
+    else if (BLOCK_BUTTON == interface->active_block 
+             && BUTTON_PREVIOUS == interface->block_item)
         state = ACTIVE;
     else
         state = INACTIVE;
@@ -288,6 +290,79 @@ void draw_buttons(const Interface *const interface)
 
 void draw_levels(const Interface *const interface)
 {
+    int8_t value, diff, amount, height;
+    
+    if ((LEVEL_VOLUME == interface->level_type && !interface->mute)
+        || LEVEL_BRIGHTNESS == interface->level_type)
+    {
+        if (LEVEL_VOLUME == interface->level_type)
+        {
+            value = interface->volume / VOLUME_STEP;
+            diff = VOLUME_DIFF;
+            amount = VOLUME_AMOUNT;
+        }
+        else
+        {
+            value = interface->brightness / BRIGHTNESS_STEP;
+            diff = BRIGHTNESS_DIFF;
+            amount = BRIGHTNESS_AMOUNT;
+        }
+    
+        for (float i = 0; i < value; i++)
+        {
+            height = (i + 1) / amount * LEVEL_HEIGHT; 
+            screen.fillRect(pgm_read_byte(&POS_LINE[0]) + 1 + diff + 2 
+                            * diff * i,
+                            pgm_read_byte(&POS_LINE[1]) - 1 - height, diff,
+                            height, SSD1306_WHITE);
+        }
+    }
+    
+    if (LEVEL_SELECT == interface->level_mode 
+        || LEVEL_ADJUST == interface->level_mode && (millis() / MLS_TO_MS) % 2)
+        for (int i = 0; i < LEVEL_LINE_WIDTH; i++)
+            screen.drawFastHLine(pgm_read_byte(&POS_LINE[0]), 
+                                 pgm_read_byte(&POS_LINE[1]) + i,
+                                 LEVEL_LINE_LENGTH, SSD1306_WHITE);
+  
+    screen.setTextSize(LEVEL_TEXT_SCALE);
+    screen.setCursor(pgm_read_byte(&POS_LEFT_ARROW[0]) + LEVEL_ARROW_SIZE,
+                     pgm_read_byte(&POS_LEFT_ARROW[1]) - LEVEL_ARROW_SIZE);
+
+    if (LEVEL_VOLUME == interface->level_type)  
+        screen.print(TEXT_VOLUME);
+    else
+        screen.print(TEXT_BRIGHTNESS);
+    
+    bool state;
+    
+    if (BLOCK_LEVEL == interface->active_block 
+        && LEVEL_DECREASE == interface->block_item)
+        state = true;
+    else
+        state = false;
+         
+    draw_triangle(POS_LEFT_ARROW, LEVEL_ARROW_SIZE, state, SSD1306_WHITE, 
+                  LEVEL_ARROW_SCALE, TRIGHT);
+    
+    if (BLOCK_LEVEL == interface->active_block 
+        && LEVEL_INCREASE == interface->block_item)
+        state = true;
+    else
+        state = false;
+         
+    draw_triangle(POS_RIGHT_ARROW, LEVEL_ARROW_SIZE, state, SSD1306_WHITE, 
+                  LEVEL_ARROW_SCALE, TLEFT);
+
+    if (BLOCK_LEVEL == interface->active_block 
+        && LEVEL_BUTTON == interface->block_item)
+        screen.drawFastHLine(pgm_read_byte(&POS_LEFT_ARROW[0]) 
+                             + LEVEL_ARROW_SIZE,
+                             pgm_read_byte(&POS_LEFT_ARROW[1]) 
+                             + LEVEL_ARROW_SIZE,
+                             LEVEL_CHARS * DEFAULT_TEXT_WIDTH 
+                             / DEFAULT_TEXT_SCALE,
+                             SSD1306_WHITE);
 
 }
 

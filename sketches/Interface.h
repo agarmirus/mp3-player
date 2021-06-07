@@ -49,6 +49,8 @@ const PROGMEM int8_t MAX_BLOCK_ELEMENTS[] = {3, 3};
 #define MAX_LEVEL_BRIGHTNESS   255
 #define BRIGHTNESS_STEP         51
 #define VOLUME_STEP              3
+#define VOLUME_AMOUNT           10
+#define BRIGHTNESS_AMOUNT        5
 #define INCREASE                 1
 #define DECREASE                 2
 #define FADED_BRIGHTNESS_SCALE   4 // To be tested
@@ -57,7 +59,7 @@ const PROGMEM int8_t MAX_BLOCK_ELEMENTS[] = {3, 3};
 #define ADJUST_TIME           4000 // To be tested
 #define SLEEP_TIME           10000 // To be tested
 
-const PROGMEM char TRACK_PLACEHOLDER[] = "Ничего не воспроизводится";
+const PROGMEM char TRACK_PLACEHOLDER[] = "Nothing is playing";
 
 // EEPROM
 #define VOLUME_BYTE     100

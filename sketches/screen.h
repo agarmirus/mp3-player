@@ -28,6 +28,10 @@
 #define DEFAULE_TEXT_OFFSET  4
 #define TEXT_Y               8
 
+// Triangles
+#define TLEFT   1
+#define TRIGHT -1
+
 // Buttons
 #define PRESSED     2
 #define ACTIVE      1
@@ -43,6 +47,26 @@ const PROGMEM uint8_t POS_FORWARD_BUTTON[] = {106, 41};
 #define SIN60           0.8660254
 #define COS60           0.5
 #define DIAG            0.707106
+
+// Levels
+const PROGMEM uint8_t POS_LINE[] = {11, 44};
+#define LEVEL_LINE_WIDTH   2
+#define LEVEL_LINE_LENGTH 24
+#define LEVEL_HEIGHT      15
+#define VOLUME_DIFF        1
+#define BRIGHTNESS_DIFF    2
+
+const PROGMEM uint8_t POS_LEFT_ARROW[] = {11, 53};
+const PROGMEM uint8_t POS_RIGHT_ARROW[] = {35, 53};
+#define LEVEL_ARROW_SIZE  4
+#define LEVEL_ARROW_SCALE 1
+#define LEVEL_TEXT_SCALE  1
+#define LEVEL_CHARS       3
+#define TEXT_BRIGHTNESS   F("BRT")
+#define TEXT_VOLUME       F("VOL")
+
+// Some values
+#define MLS_TO_MS 1000
 
 // Return codes
 #define OK_SCREEN         0
