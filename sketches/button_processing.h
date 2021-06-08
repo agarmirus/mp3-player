@@ -26,7 +26,7 @@ const PROGMEM int PIN_BUTTON_LEFT = 4;
 const PROGMEM int PIN_BUTTON_SELECT = 5;
 const PROGMEM int PIN_BUTTON_RIGHT = 8;
 
-void button_processsing(int *const button);
+void button_processing(int *const button);
 
 #endif
 
