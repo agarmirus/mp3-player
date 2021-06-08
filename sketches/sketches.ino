@@ -5,10 +5,11 @@
 
 // #define _INIT_
 
-int buttons[BUTTONS_COUNT] = { BUTTON_NOT_PRESSED };
-
 Interface interface;
 int8_t event;
+
+int buttons[BUTTONS_COUNT] = { BUTTON_NOT_PRESSED };
+int current_track_number = 0;
 
 void setup(void)
 {
@@ -35,7 +36,29 @@ void loop(void)
     // Get/set variables 
     // Do stuff ...
 
-    
+    if (event == PLAY_BUTTON_PRESSED)
+    {
+        if (interface.state == PLAY)
+        {
+            play(current_track_number);
+        }
+        else if (interface.state == PAUSE)
+        {
+            stop();
+        }
+    }
+    else if (event == PREVIOUS_BUTTON_PRESSED || event == FORWARD_BUTTON_PRESSED)
+    {
+        stop();
+        current_track_number += event == FORWARD_BUTTON_PRESSED ? 1 : -1;
+
+        if (current_track_number < 0)
+        {
+            current_track_number = 0;
+        }
+        else
+            play(current_track_number);
+    }
 
     draw_screen_frame(&interface);
     delay(100);
