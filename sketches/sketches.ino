@@ -1,11 +1,11 @@
-
+/
 #include "button_processing.h"
 #include "file_handler.h"
 #include "Interface.h"
 #include "screen.h"
 
 #define BUTTON_NOT_PRESSED 0
-#define BUTTONS_COUNT 4
+#define BUTTONS_COUNT 3
 
 #define DEFAULT_VOLUME 10
 #define MUTE 0
@@ -40,6 +40,7 @@ void loop(void)
 {
     // Get information about buttons
 
+    button_processing(buttons);
     event = get_event(&interface, buttons);
     check_timer(&interface);
 
