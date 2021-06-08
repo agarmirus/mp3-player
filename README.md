@@ -2,4 +2,4 @@
 
 # Используемые сторонние библиотеки
 
-- DFMiniMp3: [https://github.com/Makuna/DFMiniMp3](GitHub)
+- DFMiniMp3: [GitHub](https://github.com/Makuna/DFMiniMp3)
