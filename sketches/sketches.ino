@@ -3,16 +3,9 @@
 #include "Interface.h"
 #include "screen.h"
 
-
-#define BUTTONS_COUNT 3
-
-#define INDEX_BUTTON_LEFT 0
-#define INDEX_BUTTON_SELECT 1
-#define INDEX_BUTTON_RIGHT 2
-
-int buttons[BUTTONS_COUNT] = {0};
-
 // #define _INIT_
+
+int buttons[BUTTONS_COUNT] = { BUTTON_NOT_PRESSED };
 
 Interface interface;
 int8_t event;

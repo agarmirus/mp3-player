@@ -11,9 +11,10 @@
 
 #include "button_processing.h"
 
-void button_processsing(int *const button)
+void button_processing(int *const button)
 {
-    button[INDEX_BUTTON_LEFT] = digitalRead(pgm_read_word(&BUTTON_LEFT)) == LOW ? BUTTON_PRESSED : BUTTON_NOT_PRESSED;
-    button[INDEX_BUTTON_SELECT] = digitalRead(pgm_read_word(&BUTTON_SELECT)) == LOW ? BUTTON_PRESSED : BUTTON_NOT_PRESSED;
-    button[INDEX_BUTTON_RIGHT] = digitalRead(pgm_read_word(&BUTTON_RIGHT)) == LOW ? BUTTON_PRESSED : BUTTON_NOT_PRESSED;
+    button[INDEX_BUTTON_LEFT] = (digitalRead(pgm_read_word(&PIN_BUTTON_LEFT)) == LOW) ? BUTTON_PRESSED : BUTTON_NOT_PRESSED;
+    button[INDEX_BUTTON_SELECT] = (digitalRead(pgm_read_word(&PIN_BUTTON_SELECT)) == LOW) ? BUTTON_PRESSED : BUTTON_NOT_PRESSED;
+    button[INDEX_BUTTON_RIGHT] = (digitalRead(pgm_read_word(&PIN_BUTTON_RIGHT)) == LOW) ? BUTTON_PRESSED : BUTTON_NOT_PRESSED;
 }
+
