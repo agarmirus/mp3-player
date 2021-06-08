@@ -98,7 +98,7 @@ const PROGMEM char TRACK_PLACEHOLDER[] = "Nothing is playing";
 typedef struct 
 {
     // settings
-    uint8_t brightness;
+    uint16_t brightness;
     uint8_t volume; 
     int8_t mute;
     int8_t invert;
