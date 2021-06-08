@@ -8,6 +8,7 @@
 #define BUTTONS_COUNT 4
 
 #define DEFAULT_VOLUME 10
+#define MUTE 0
 
 // #define _INIT_
 
@@ -53,7 +54,7 @@ void loop(void)
         }
         else if (interface.state == PAUSE)
         {
-            stop();
+            pause();
         }
     }
     else if (event == PREVIOUS_BUTTON_PRESSED || event == FORWARD_BUTTON_PRESSED)
@@ -71,6 +72,15 @@ void loop(void)
     else if (event == VOLUME_CHANGED)
     {
         setVolume(interface.volume);
+    }
+    else if (event == MUTE_TOGGLED)
+    {
+        if (interface.mute)
+        {
+            setVolume(MUTE);
+        }
+        else
+            setVolume(interface.volume);
     }
 
     draw_screen_frame(&interface);
