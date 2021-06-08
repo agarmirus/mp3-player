@@ -75,7 +75,13 @@ void loop(void)
     {
         stop();
         current_track_number += event == FORWARD_BUTTON_PRESSED ? 1 : -1;
-        play(current_track_number);
+
+        if (current_track_number < 0)
+        {
+            current_track_number = 0;
+        }
+        else
+            play(current_track_number);
     }
 
     draw_screen_frame(&interface);
