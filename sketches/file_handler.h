@@ -21,6 +21,8 @@ void play(const int num);
 
 void stop();
 
+void pause();
+
 void play_needed_track(int file, int track);
 
 #endif
