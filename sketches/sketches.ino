@@ -1,11 +1,18 @@
+
 #include "button_processing.h"
 #include "file_handler.h"
 #include "Interface.h"
 #include "screen.h"
 
+#define BUTTON_NOT_PRESSED 0
+#define BUTTONS_COUNT 4
+
+#define DEFAULT_VOLUME 10
+
 // #define _INIT_
 
 Interface interface;
+
 int8_t event;
 
 int buttons[BUTTONS_COUNT] = { BUTTON_NOT_PRESSED };
@@ -24,6 +31,8 @@ void setup(void)
     setupDFM();  // Initializing DFMPlayer
     init_interface(&interface);
     init_screen(&interface);
+
+    setVolume(DEFAULT_VOLUME);
 }
 
 void loop(void)
@@ -58,6 +67,10 @@ void loop(void)
         }
         else
             play(current_track_number);
+    }
+    else if (event == VOLUME_CHANGED)
+    {
+        setVolume(interface.volume);
     }
 
     draw_screen_frame(&interface);
