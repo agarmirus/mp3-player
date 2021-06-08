@@ -22,9 +22,9 @@
 #define INDEX_BUTTON_SELECT 1
 #define INDEX_BUTTON_RIGHT 2
 
-const PROGMEM int PIN_BUTTON_LEFT = 4;
-const PROGMEM int PIN_BUTTON_SELECT = 5;
-const PROGMEM int PIN_BUTTON_RIGHT = 8;
+const PROGMEM int BUTTON_LEFT = 4;
+const PROGMEM int BUTTON_SELECT = 5;
+const PROGMEM int BUTTON_RIGHT = 8;
 
 void button_processing(int *const button);
 
