@@ -35,7 +35,7 @@ Adafruit_SSD1306 screen(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire);
 
 uint8_t init_screen(Interface *const interface)
 {
-    if (!(screen.begin(SSD1306_SWITCHCAPVCC)))
+    if (!(screen.begin(SSD1306_SWITCHCAPVCC, SCREEN_ADDR)))
         return ERROR_SCREEN_INIT;
 
     screen.clearDisplay();

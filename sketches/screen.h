@@ -12,6 +12,8 @@
 #include <avr/pgmspace.h>
 #include "Interface.h"
 
+#define SCREEN_ADDR 0x3C
+
 // Pins
 #define SCREEN_SCL 5 
 #define SCREEN_SDA 4 
