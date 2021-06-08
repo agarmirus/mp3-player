@@ -80,7 +80,7 @@ void screen_shutdown(const Interface *const interface); // TODO
 
 void draw_screen_frame(Interface *const interface);
 
-void set_screen_brightness(const uint8_t brightness);
+void set_screen_brightness(const uint16_t brightness);
 
 void set_screen_invert(const uint8_t type);
 

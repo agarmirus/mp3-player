@@ -46,8 +46,11 @@ const PROGMEM int8_t MAX_BLOCK_ELEMENTS[] = {2, 2};
 // Values
 #define MAX_STRING             255
 #define MAX_LEVEL_VOLUME        30
-#define MAX_LEVEL_BRIGHTNESS   255
-#define BRIGHTNESS_STEP         51
+#define MAX_LEVEL_BRIGHTNESS   410
+#define BRIGHTNESS_OVERFLOW    156
+#define PRECHARGE_LOW           16
+#define PRECHARGE_HIGH           0
+#define BRIGHTNESS_STEP         82
 #define VOLUME_STEP              3
 #define VOLUME_AMOUNT           10
 #define BRIGHTNESS_AMOUNT        5
@@ -68,7 +71,7 @@ const PROGMEM char TRACK_PLACEHOLDER[] = "Nothing is playing";
 #define INVERT_BYTE     103
 
 #define DEF_VOLUME      15
-#define DEF_BRIGHTNESS 102
+#define DEF_BRIGHTNESS 246
 #define DEF_MUTE         0
 #define DEF_INVERT       0
 
