@@ -35,7 +35,7 @@ void play(const int num)
 
 void stop()
 {
-    dfmp3.stop()
+    dfmp3.stop();
 }
 
 void play_needed_track(int file, int track)

@@ -6,6 +6,10 @@
 //  Copyright © 2021 Волков Даниил Вячеславович. All rights reserved.
 //
 
+#ifndef FILE_HANDLER_H
+#define FILE_HANDLER_H
+
+
 #include "DFMiniMp3.h"
 #include <stdint.h>
 
@@ -18,3 +22,5 @@ void play(const int num);
 void stop();
 
 void play_needed_track(int file, int track);
+
+#endif
