@@ -19,6 +19,8 @@ int8_t event;
 int buttons[BUTTONS_COUNT] = { BUTTON_NOT_PRESSED };
 int current_track_number = 0;
 
+char str[2];
+
 void setup(void)
 {
 #ifdef _INIT_
@@ -68,7 +70,11 @@ void loop(void)
             current_track_number = 0;
         }
         else
-            play(current_track_number);
+            {           
+                sprintf(str, "%d", current_track_number);
+                set_track(&interface, str);
+                play(current_track_number);
+            }
     }
     else if (event == VOLUME_CHANGED)
     {
@@ -81,7 +87,7 @@ void loop(void)
             setVolume(MUTE);
         }
         else
-            setVolume(interface.volume);
+            {setVolume(interface.volume);}
     }
 
     draw_screen_frame(&interface);
