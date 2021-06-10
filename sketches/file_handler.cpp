@@ -38,11 +38,6 @@ void stop()
     dfmp3.stop();
 }
 
-void pause()
-{
-    dfmp3.pause();
-}
-
 void play_needed_track(int file, int track)
 {
     playFolderTrack16(file, track);
