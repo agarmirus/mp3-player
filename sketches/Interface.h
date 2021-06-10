@@ -65,10 +65,10 @@ const PROGMEM int8_t MAX_BLOCK_ELEMENTS[] = {2, 2};
 const PROGMEM char TRACK_PLACEHOLDER[] = "Nothing is playing";
 
 // EEPROM
-#define VOLUME_BYTE     100
-#define BRIGHTNESS_BYTE 101
-#define MUTE_BYTE       102
-#define INVERT_BYTE     103
+#define MUTE_BYTE             100
+#define INVERT_BYTE           101
+#define VOLUME_BYTE           102
+#define BRIGHTNESS_BYTE_START 103
 
 #define DEF_VOLUME      15
 #define DEF_BRIGHTNESS 246

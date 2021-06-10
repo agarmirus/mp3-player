@@ -20,7 +20,7 @@ int8_t on_select_level(Interface *const interface, const int8_t type);
 
 void init_interface(Interface *const interface)
 {
-    interface->brightness = EEPROM.read(BRIGHTNESS_BYTE);
+    EEPROM.get(BRIGHTNESS_BYTE_START, interface->brightness);
     interface->volume = EEPROM.read(VOLUME_BYTE);
     interface->mute = EEPROM.read(MUTE_BYTE);
     interface->invert = EEPROM.read(INVERT_BYTE);
@@ -46,7 +46,7 @@ void init_interface(Interface *const interface)
 
 void init_screen_eeprom(void)
 {
-    EEPROM.write(BRIGHTNESS_BYTE, DEF_BRIGHTNESS);
+    EEPROM.put(BRIGHTNESS_BYTE_START, DEF_BRIGHTNESS);
     EEPROM.write(VOLUME_BYTE, DEF_VOLUME);
     EEPROM.write(INVERT_BYTE, DEF_INVERT);
     EEPROM.write(MUTE_BYTE, DEF_MUTE);
@@ -81,7 +81,7 @@ void check_timer(Interface *const interface)
 
 void shudown_interface(const Interface *const interface)
 {
-    EEPROM.update(BRIGHTNESS_BYTE, interface->brightness);
+    EEPROM.put(BRIGHTNESS_BYTE_START, interface->brightness);
     EEPROM.update(VOLUME_BYTE, interface->volume);
     EEPROM.update(INVERT_BYTE, interface->invert);
     EEPROM.update(MUTE_BYTE, interface->mute);

@@ -368,11 +368,9 @@ void draw_levels(const Interface *const interface)
 
 void set_screen_brightness(uint16_t brightness)
 {
-    int8_t precharge;
+    int8_t precharge = PRECHARGE_LOW;
     
-    if (MAX_LEVEL_BRIGHTNESS - BRIGHTNESS_OVERFLOW >= brightness): 
-        precharge = PRECHARGE_LOW; 
-    else 
+    if (MAX_LEVEL_BRIGHTNESS - BRIGHTNESS_OVERFLOW < brightness)
     {        
         precharge = PRECHARGE_HIGH; 
         brightness -= BRIGHTNESS_OVERFLOW; 
