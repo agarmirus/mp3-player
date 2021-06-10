@@ -8,6 +8,7 @@
 #include <string.h>
 #include <limits.h>
 #include <EEPROM.h>
+#include <stdio.h>
 #include "Interface.h"
 #include "screen.h"
 #include "button_processing.h"
@@ -145,6 +146,13 @@ void set_track(Interface *const interface, const char *const track)
 
     interface->cursor_pos = (SCREEN_WIDTH 
                              - interface->track_size * DEFAULT_TEXT_WIDTH) / 2;
+}
+
+void set_track(Interface *const interface, const int32_t num)
+{
+    char track[MAX_STRING + 1];
+    sprintf(track, TRACK_NUM_FORMAT, num);
+    set_track(interface, track);
 }
 
 int8_t on_select(Interface *const interface)
