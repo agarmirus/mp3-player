@@ -57,7 +57,7 @@ void loop(void)
         }
         else if (interface.state == PAUSE)
         {
-            pause();
+            stop();
         }
     }
     else if (event == PREVIOUS_BUTTON_PRESSED || event == FORWARD_BUTTON_PRESSED)
