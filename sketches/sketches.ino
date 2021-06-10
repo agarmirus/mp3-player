@@ -70,11 +70,11 @@ void loop(void)
             current_track_number = 0;
         }
         else
-            {           
-                sprintf(str, "%d", current_track_number);
-                set_track(&interface, str);
-                play(current_track_number);
-            }
+        {           
+            sprintf(str, "%d", current_track_number);
+            set_track(&interface, str);
+            play(current_track_number);
+        }
     }
     else if (event == VOLUME_CHANGED)
     {
