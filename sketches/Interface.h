@@ -60,6 +60,7 @@ const PROGMEM int8_t MAX_BLOCK_ELEMENTS[] = {2, 2};
 #define SLEEP_TIME           10000 // To be tested
 
 const PROGMEM char TRACK_PLACEHOLDER[] = "Nothing is playing";
+#define TRACK_NUM_FORMAT "Track #%d"
 
 // EEPROM
 #define VOLUME_BYTE     100
@@ -137,6 +138,8 @@ void step_volume(Interface *const interface, const int8_t type);
 void toggle_mute(Interface *const interface);
 
 void set_track(Interface *const interface, const char *const track);
+
+void set_track(Interface *const interface, const int32_t num);
 
 void set_error(Interface *const interface, const int8_t  error);
 
