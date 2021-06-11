@@ -47,7 +47,7 @@ public:
 SoftwareSerial secondarySerial(10, 11); // RX, TX
 DFMiniMp3<SoftwareSerial, Mp3Notify> mp3(secondarySerial);
 
-void setupDFM(uint8_t volume)
+void setupDFM(uint_8 volume)
 {
     mp3.begin();
     mp3.setVolume(volume);

@@ -8,7 +8,7 @@
 #ifndef FILE_HANDLER_H
 #define FILE_HANDLER_H
 
-void setupDFM(uint8_t volume);
+void setupDFM(uint_8 volume);
 
 void play(const int num);
 
