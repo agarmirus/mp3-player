@@ -33,8 +33,6 @@ void setup(void)
     setupDFM();  // Initializing DFMPlayer
     init_interface(&interface);
     init_screen(&interface);
-
-    setVolume(DEFAULT_VOLUME);
 }
 
 void loop(void)
@@ -50,11 +48,11 @@ void loop(void)
 
     if (event == PLAY_BUTTON_PRESSED)
     {
-        if (interface.state == PLAY)
+        if (get_state(&interface) == PLAY)
         {
             play(current_track_number);
         }
-        else if (interface.state == PAUSE)
+        else if (get_state(&interface) == PAUSE)
         {
             stop();
         }
@@ -77,7 +75,7 @@ void loop(void)
     }
     else if (event == VOLUME_CHANGED)
     {
-        setVolume(interface.volume);
+        setVolume(get_volume(&interface));
     }
     else if (event == MUTE_TOGGLED)
     {
@@ -86,7 +84,9 @@ void loop(void)
             setVolume(MUTE);
         }
         else
-            {setVolume(interface.volume);}
+        {
+            setVolume(get_volume(&interface));
+        }
     }
 
     draw_screen_frame(&interface);
