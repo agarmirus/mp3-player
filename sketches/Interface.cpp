@@ -53,6 +53,14 @@ void init_screen_eeprom(void)
     EEPROM.write(MUTE_BYTE, DEF_MUTE);
 }
 
+void update_screen_eeprom(const Interface *const interface)
+{
+    EEPROM.put(BRIGHTNESS_BYTE_START, interface->brightness);
+    EEPROM.update(VOLUME_BYTE, interface->volume);
+    EEPROM.update(INVERT_BYTE, interface->invert);
+    EEPROM.update(MUTE_BYTE, interface->mute);
+}
+
 void check_timer(Interface *const interface)
 {
     unsigned long c_time = millis();
@@ -72,6 +80,7 @@ void check_timer(Interface *const interface)
     {
         interface->fade = FADED;
         set_screen_brightness(interface->brightness / FADED_BRIGHTNESS_SCALE);
+        update_screen_eeprom(interface); // Temporary
     }
     else if (FADED == interface->fade && diff <= SLEEP_TIME)
     {
@@ -82,11 +91,7 @@ void check_timer(Interface *const interface)
 
 void shudown_interface(const Interface *const interface)
 {
-    EEPROM.put(BRIGHTNESS_BYTE_START, interface->brightness);
-    EEPROM.update(VOLUME_BYTE, interface->volume);
-    EEPROM.update(INVERT_BYTE, interface->invert);
-    EEPROM.update(MUTE_BYTE, interface->mute);
-    
+    update_screen_eeprom(interface);
     screen_shutdown(interface);
 }
 
