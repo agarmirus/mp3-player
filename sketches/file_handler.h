@@ -16,6 +16,6 @@ void stop_play();
 
 void play_needed_track(int file, int track);
 
-void set_volume(int volume);
+void set_volume(uint8_t volume);
 
 #endif

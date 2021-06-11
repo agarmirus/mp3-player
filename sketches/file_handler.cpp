@@ -63,10 +63,11 @@ void stop_play()
     mp3.stop();
 }
 
-void set_volume(int volume)
+void set_volume(uint8_t volume)
 {
   mp3.setVolume(volume);
 }
+
 void play_needed_track(int file, int track)
 {
     mp3.playFolderTrack16(file, track);
