@@ -33,8 +33,6 @@ void setup(void)
     setupDFM();  // Initializing DFMPlayer
     init_interface(&interface);
     init_screen(&interface);
-
-    setVolume(DEFAULT_VOLUME);
 }
 
 void loop(void)
