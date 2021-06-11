@@ -6,7 +6,6 @@
 #define BUTTON_NOT_PRESSED 0
 #define BUTTONS_COUNT 3
 
-#define DEFAULT_VOLUME 10
 #define MUTE 0
 
 // #define _INIT_
@@ -26,9 +25,9 @@ void setup(void)
     init_screen_eeprom();
 #endif
 
-    pinMode(pgm_read_word(&PIN_BUTTON_LEFT), INPUT_PULLUP);
-    pinMode(pgm_read_word(&PIN_BUTTON_SELECT), INPUT_PULLUP);
-    pinMode(pgm_read_word(&PIN_BUTTON_RIGHT), INPUT_PULLUP);
+    pinMode(pgm_read_word(&BUTTON_LEFT), INPUT_PULLUP);
+    pinMode(pgm_read_word(&BUTTON_SELECT), INPUT_PULLUP);
+    pinMode(pgm_read_word(&BUTTON_RIGHT), INPUT_PULLUP);
 
     setupDFM();  // Initializing DFMPlayer
     init_interface(&interface);
@@ -68,8 +67,7 @@ void loop(void)
         }
         else
         {           
-            sprintf(str, "%d", current_track_number);
-            set_track(&interface, str);
+            set_track(&interface, current_track_number);
             play(current_track_number);
         }
     }
