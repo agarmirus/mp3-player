@@ -29,9 +29,9 @@ void setup(void)
     pinMode(pgm_read_word(&BUTTON_SELECT), INPUT_PULLUP);
     pinMode(pgm_read_word(&BUTTON_RIGHT), INPUT_PULLUP);
 
-    setupDFM(DEFAULT_VOLUME);  // Initializing DFMPlayer
     init_interface(&interface);
     init_screen(&interface);
+    setupDFM(get_volume(&interface));  // Initializing DFMPlayer
 }
 
 void loop(void)
