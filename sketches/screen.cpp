@@ -376,4 +376,3 @@ void set_screen_invert(const uint8_t type)
 {
     screen.invertDisplay(type);
 }
-
