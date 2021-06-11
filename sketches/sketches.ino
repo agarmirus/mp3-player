@@ -29,7 +29,7 @@ void setup(void)
     pinMode(pgm_read_word(&BUTTON_SELECT), INPUT_PULLUP);
     pinMode(pgm_read_word(&BUTTON_RIGHT), INPUT_PULLUP);
 
-    setupDFM();  // Initializing DFMPlayer
+    setupDFM(DEFAULT_VOLUME);  // Initializing DFMPlayer
     init_interface(&interface);
     init_screen(&interface);
 }
@@ -53,12 +53,12 @@ void loop(void)
         }
         else if (get_state(&interface) == PAUSE)
         {
-            stop();
+            stop_play();
         }
     }
     else if (event == PREVIOUS_BUTTON_PRESSED || event == FORWARD_BUTTON_PRESSED)
     {
-        stop();
+        stop_play();
         current_track_number += event == FORWARD_BUTTON_PRESSED ? 1 : -1;
 
         if (current_track_number < 0)
@@ -73,17 +73,17 @@ void loop(void)
     }
     else if (event == VOLUME_CHANGED)
     {
-        setVolume(get_volume(&interface));
+        set_volume(get_volume(&interface));
     }
     else if (event == MUTE_TOGGLED)
     {
         if (interface.mute)
         {
-            setVolume(MUTE);
+            set_volume(MUTE);
         }
         else
         {
-            setVolume(get_volume(&interface));
+            set_volume(get_volume(&interface));
         }
     }
 
