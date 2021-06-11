@@ -155,7 +155,7 @@ void set_track(Interface *const interface, const char *const track)
 
 void set_track(Interface *const interface, const int32_t num)
 {
-    char track[MAX_STRING + 1];
+    char track[MAX_STRING_CONVERT + 1];
     sprintf(track, TRACK_NUM_FORMAT, num);
     set_track(interface, track);
 }
