@@ -45,6 +45,7 @@ const PROGMEM int8_t MAX_BLOCK_ELEMENTS[] = {2, 2};
 
 // Values
 #define MAX_STRING             255
+#define MAX_STRING_CONVERT      11
 #define MAX_LEVEL_VOLUME        30
 #define MAX_LEVEL_BRIGHTNESS   410
 #define BRIGHTNESS_OVERFLOW    156
