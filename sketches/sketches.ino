@@ -67,8 +67,7 @@ void loop(void)
         }
         else
         {           
-            sprintf(str, "%d", current_track_number);
-            set_track(&interface, str);
+            set_track(&interface, current_track_number);
             play(current_track_number);
         }
     }
