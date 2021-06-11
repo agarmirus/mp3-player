@@ -1,4 +1,3 @@
-//
 //  file_handler.h
 //  practice
 //
@@ -9,7 +8,7 @@
 #ifndef FILE_HANDLER_H
 #define FILE_HANDLER_H
 
-void setupDFM(int volume);
+void setupDFM(uint8_t volume);
 
 void play(const int num);
 
@@ -17,6 +16,6 @@ void stop_play();
 
 void play_needed_track(int file, int track);
 
-void setVolume_play(int volume);
+void set_volume(int volume);
 
 #endif
