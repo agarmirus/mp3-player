@@ -366,8 +366,19 @@ void draw_levels(const Interface *const interface)
 
 }
 
-void set_screen_brightness(const uint8_t brightness)
+void set_screen_brightness(uint16_t brightness)
 {
+    int8_t precharge = PRECHARGE_LOW;
+    
+    if (MAX_LEVEL_BRIGHTNESS - BRIGHTNESS_OVERFLOW < brightness)
+    {        
+        precharge = PRECHARGE_HIGH; 
+        brightness -= BRIGHTNESS_OVERFLOW; 
+    }
+
+    screen.ssd1306_command(SSD1306_SETPRECHARGE);
+    screen.ssd1306_command(precharge);
+
     screen.ssd1306_command(SSD1306_SETCONTRAST);
     screen.ssd1306_command(brightness);
 }
