@@ -128,6 +128,8 @@ void init_interface(Interface *const interface);
 
 void init_screen_eeprom(void);
 
+void update_screen_eeprom(const Interface *const interface);
+
 void check_timer(Interface *const interface);
 
 void shudown_interface(const Interface *const interface);
