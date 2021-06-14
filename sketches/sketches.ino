@@ -58,7 +58,6 @@ void loop(void)
     }
     else if (event == PREVIOUS_BUTTON_PRESSED || event == FORWARD_BUTTON_PRESSED)
     {
-        stop_play();
         current_track_number += event == FORWARD_BUTTON_PRESSED ? 1 : -1;
 
         if (current_track_number < 0)
@@ -67,11 +66,7 @@ void loop(void)
         set_track(&interface, current_track_number);
         
         if (get_state(&interface) == PLAY)
-        {
             play(current_track_number);
-        }
-        else
-            stop_play();
     }
     else if (event == VOLUME_CHANGED)
     {
