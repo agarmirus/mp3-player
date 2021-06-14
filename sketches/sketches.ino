@@ -67,7 +67,11 @@ void loop(void)
         set_track(&interface, current_track_number);
         
         if (get_state(&interface) == PLAY)
+        {
             play(current_track_number);
+        }
+        else
+            stop_play();
     }
     else if (event == VOLUME_CHANGED)
     {
