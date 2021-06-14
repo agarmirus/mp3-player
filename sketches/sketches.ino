@@ -64,7 +64,6 @@ void loop(void)
         if (current_track_number < 0)
             current_track_number = 0;
 
-        play(current_track_number);
         set_track(&interface, current_track_number);
         
         if (get_state(&interface) == PLAY)
