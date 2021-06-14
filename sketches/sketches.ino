@@ -8,7 +8,7 @@
 
 #define MUTE 0
 
-// #define _INIT_
+#define _INIT_
 
 Interface interface;
 
